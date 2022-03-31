@@ -1,5 +1,6 @@
 # DownloadManager
-Simple download manager android
+## Simple download manager android - support pause and resume (with avg speed download, eta and remaining time)
 
 
 ![Screenshot 1](https://github.com/adi-itgg/DownloadManager/raw/master/ss/dmss.jpg)
+![Screenshot 2](https://github.com/adi-itgg/DownloadManager/raw/master/ss/dmss2.jpg)
