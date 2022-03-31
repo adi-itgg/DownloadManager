@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +23,6 @@ import me.phantomx.downloadmanager.databinding.ActivityMainBinding
 import me.phantomx.downloadmanager.extensions.hasPermissions
 import me.phantomx.downloadmanager.extensions.isRunningService
 import me.phantomx.downloadmanager.services.DownloadService
-import me.phantomx.downloadmanager.viewmodel.MainViewModel
 import okhttp3.OkHttpClient
 import java.io.File
 import javax.inject.Inject
@@ -32,7 +30,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 abstract class MainScreen: AppCompatActivity(), Observer<FileDownload>, ServiceConnection {
     lateinit var binding: ActivityMainBinding
-    lateinit var viewModel: MainViewModel
     lateinit var downloadService: DownloadService
     lateinit var adapter: DownloadAdapter
 
@@ -95,7 +92,6 @@ abstract class MainScreen: AppCompatActivity(), Observer<FileDownload>, ServiceC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContentView(binding.root)
         onCreateActivity(savedInstanceState)
     }
