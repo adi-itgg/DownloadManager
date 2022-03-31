@@ -1,5 +1,5 @@
 # DownloadManager
-## Simple download manager android - support pause and resume (with avg speed download, eta and remaining time)
+### Simple download manager android using OkHttpClient - support pause and resume (with avg speed download, eta and remaining time)
 
 
 ![Screenshot 1](https://github.com/adi-itgg/DownloadManager/raw/master/ss/dmss.jpg)
