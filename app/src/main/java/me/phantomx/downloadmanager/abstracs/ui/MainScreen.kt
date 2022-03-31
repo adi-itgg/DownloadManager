@@ -47,7 +47,7 @@ abstract class MainScreen: AppCompatActivity(), Observer<FileDownload>, ServiceC
     @Inject
     lateinit var directory: File
 
-    var broadcastReceiver = object : BroadcastReceiver() {
+    private var broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             intent?.let {
                 it.getSerializableExtra("job")?.let { serialize ->
