@@ -100,7 +100,11 @@ abstract class RecyclerViewAdapter(
                         }
                         R.id.delete -> {
                             if (File(saveLocation).delete())
-                                Toast.makeText(context, "File has been deleted!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context,
+                                    "File has been deleted!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             true
                         }
                         R.id.copydownloadlink -> {
@@ -122,35 +126,43 @@ abstract class RecyclerViewAdapter(
         }
 
     private fun Context.openFile(filePath: String): Boolean {
-        if (File(filePath).isDirectory)
-            return Intent(Intent.ACTION_GET_CONTENT).run {
-                setDataAndType(Uri.parse(filePath + File.separator), "file/*")
-                startActivity(this)
-                true
-            }
-        val uri = FileProvider.getUriForFile(
-            this,
-            "${packageName}.provider",
-            File(filePath)
-        )
+        try {
+            if (File(filePath).isDirectory)
+                return Intent(Intent.ACTION_GET_CONTENT).run {
+                    setDataAndType(Uri.parse(filePath + File.separator), "*/*")
+                    addCategory("android.intent.category.DEFAULT")
+                    val chooser = Intent.createChooser(this, "Open Folder")
+                    startActivity(chooser)
+                    true
+                }
 
-        val mime: String = getMimeType(uri.toString())
+            val uri = FileProvider.getUriForFile(
+                this,
+                "${packageName}.provider",
+                File(filePath)
+            )
 
-        return Intent(Intent.ACTION_VIEW).run {
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            setDataAndType(uri, mime)
-            try {
-                startActivity(this)
-                true
-            } catch (e: ActivityNotFoundException) {
-                Toast.makeText(
-                    this@openFile,
-                    "No one application can open this file",
-                    Toast.LENGTH_SHORT
-                ).show()
-                false
+            val mime: String = getMimeType(uri.toString())
+
+            return Intent(Intent.ACTION_VIEW).run {
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setDataAndType(uri, mime)
+                try {
+                    startActivity(this)
+                    true
+                } catch (e: ActivityNotFoundException) {
+                    Toast.makeText(
+                        this@openFile,
+                        "No one application can open this file",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    false
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+        return false
     }
 
 }
